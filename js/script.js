@@ -3,9 +3,25 @@ console.log('test');
 //Global variables:
 const inputName = document.getElementById("name");
 const inputOtherJob = document.getElementById("other-job-role");
+const selectJob = document.getElementById("title");
 
 // Highlight name input when page first loads:
 inputName.focus();
 
-//Hides the other-job-role input by default:
+//Hide the other-job-role input by default:
 inputOtherJob.style.display = "none";
+
+//Listen to changes on select Job and show/hide input other job:
+selectJob.addEventListener("change", (e) => {
+    let selectedIndex = e.target.options.selectedIndex;
+    let selectedOption = e.target[selectedIndex].value;
+
+    console.log(selectedIndex);
+    console.log(selectedOption);
+
+    if(selectedOption === "other") {
+        inputOtherJob.style.display = "block"
+    } else {
+        inputOtherJob.style.display = "none";
+    }
+})
