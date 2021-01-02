@@ -59,7 +59,15 @@ selectDesign.addEventListener("change", (e) => {
 // Listen for change in the Activities fieldset:
 activitiesField.addEventListener("change", (e) => {
     let cost = parseInt(e.target.dataset.cost);
-    activitiesCostValue += cost;
+
+    if (e.target.checked) {
+        activitiesCostValue += cost;
+    } else {
+        activitiesCostValue -= cost;
+        if (activitiesCostValue <= 0) {
+            activitiesCostValue = 0;
+        }
+    }
     console.log(e);
     console.log(e.target);
     console.dir(e.target);
