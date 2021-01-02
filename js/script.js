@@ -6,6 +6,7 @@ const inputOtherJob = document.getElementById("other-job-role");
 const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
 const selectDesign = document.getElementById("design");
+const activitiesField = document.getElementById("activities");
 
 // Highlight name input when page first loads:
 inputName.focus();
@@ -49,4 +50,10 @@ selectDesign.addEventListener("change", (e) => {
             options[i].hidden = false;
         }
     }
+})
+
+// Listen for change in the Activities fieldset:
+activitiesField.addEventListener("change", (e) => {
+    console.log(e);
+    console.log(e.target);
 })
