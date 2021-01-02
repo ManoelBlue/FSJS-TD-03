@@ -14,6 +14,9 @@ const paymentMenus = buildPaymentMenus(paymentOptions);
 let chosenPaymentIndex = selectPayment.options.selectedIndex;
 let chosenPaymentMethod = paymentOptions[chosenPaymentIndex].value;
 
+console.log(paymentOptions);
+console.log(paymentMenus);
+
 // Global variables for activities fieldset:
 const activitiesField = document.getElementById("activities");
 const activitiesCostElem = document.getElementById("activities-cost");
@@ -110,6 +113,7 @@ function choosePaymentMethod(paymentIndex) {
             paymentMenus[chosenPaymentIndex].style.display = "block";
         }
     }
+    paymentOptions[chosenPaymentIndex].selected = true;
 }
 
 // Display only payment chosen payment section:
