@@ -5,6 +5,7 @@ const inputName = document.getElementById("name");
 const inputOtherJob = document.getElementById("other-job-role");
 const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
+const selectDesign = document.getElementById("design");
 
 // Highlight name input when page first loads:
 inputName.focus();
@@ -30,3 +31,9 @@ selectJob.addEventListener("change", (e) => {
 // Disable select color:
 selectColor.disabled = true;
 console.dir(selectColor);
+
+// Listen to change in selectDesgin:
+selectDesign.addEventListener("change", (e) => {
+    console.log(e.target);
+    selectColor.disabled = false;
+})
