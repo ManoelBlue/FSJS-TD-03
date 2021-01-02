@@ -34,6 +34,22 @@ console.dir(selectColor);
 
 // Listen to change in selectDesgin:
 selectDesign.addEventListener("change", (e) => {
+    let selectedIndex = e.target.options.selectedIndex;
+    let selectedOption = e.target[selectedIndex].value;
+    let options = document.querySelectorAll("option[data-theme]");
+
     console.log(e.target);
+    console.log(selectedOption);
+
     selectColor.disabled = false;
+    for ( let i = 0; i < options.length; i++) {
+        let dataTheme = options[i].dataset.theme;
+        console.log(dataTheme);
+
+        if (selectedOption !== dataTheme) {
+            options[i].style.display = "none";
+        } else {
+            options[i].style.display = "block";
+        }
+    }
 })
