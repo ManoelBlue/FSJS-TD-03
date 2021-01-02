@@ -6,7 +6,11 @@ const inputOtherJob = document.getElementById("other-job-role");
 const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
 const selectDesign = document.getElementById("design");
+
+// Global variables for activities fieldset:
 const activitiesField = document.getElementById("activities");
+const activitiesCostElem = document.getElementById("activities-cost");
+let activitiesCostValue = 0;
 
 // Highlight name input when page first loads:
 inputName.focus();
@@ -54,6 +58,11 @@ selectDesign.addEventListener("change", (e) => {
 
 // Listen for change in the Activities fieldset:
 activitiesField.addEventListener("change", (e) => {
+    let cost = parseInt(e.target.dataset.cost);
+    activitiesCostValue += cost;
     console.log(e);
     console.log(e.target);
+    console.dir(e.target);
+
+    activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
 })
