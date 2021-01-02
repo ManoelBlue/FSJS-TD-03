@@ -7,10 +7,33 @@ const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
 const selectDesign = document.getElementById("design");
 
+// Global variables for payment:
+const selectPayment = document.getElementById("payment");
+const paymentOptions = document.querySelectorAll("select#payment option");
+const paymentMenus = buildPaymentMenus(paymentOptions);
+let chosenPaymentIndex = selectPayment.options.selectedIndex;
+let chosenPaymentMethod = paymentOptions[chosenPaymentIndex].value;
+
 // Global variables for activities fieldset:
 const activitiesField = document.getElementById("activities");
 const activitiesCostElem = document.getElementById("activities-cost");
 let activitiesCostValue = 0;
+
+// Global functions:
+/**
+ * @function buildPaymentMenus
+ * @description Creates a nodelist with all menu divs
+ * @param {NodeList} - nodelist with possible options of payment
+ */
+function buildPaymentMenus(paymentOptions) {
+    let menus = [];
+    for (let i = 0; i < paymentOptions.length; i++) {
+        let menu = document.getElementById(paymentOptions[i].value);
+        menus.push(menu);
+    }
+
+    return menus;
+};
 
 // Highlight name input when page first loads:
 inputName.focus();
@@ -68,9 +91,32 @@ activitiesField.addEventListener("change", (e) => {
             activitiesCostValue = 0;
         }
     }
-    console.log(e);
-    console.log(e.target);
-    console.dir(e.target);
 
     activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
 })
+
+/**
+ * @function choosePaymentMethod
+ * @param {number} - sets the chosen payment method index
+ * @description chooses the payment method
+ */
+function choosePaymentMethod(paymentIndex) {
+    chosenPaymentIndex = paymentIndex;
+    chosenPaymentMethod = paymentOptions[paymentIndex].value;
+
+    for (let i = 0; i < paymentMenus.length; i++) {
+        if (paymentMenus[i]) {
+            paymentMenus[i].style.display = "none";
+            paymentMenus[chosenPaymentIndex].style.display = "block";
+        }
+    }
+}
+
+// Display only payment chosen payment section:
+selectPayment.addEventListener("change", (e) => {
+    choosePaymentMethod(e.target.options.selectedIndex);
+})
+
+// Select the creadit card paymentoption by default:
+choosePaymentMethod(1);
+
