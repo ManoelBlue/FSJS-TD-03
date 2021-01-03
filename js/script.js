@@ -26,9 +26,9 @@ let chosenPaymentIndex = selectPayment.options.selectedIndex;
 let chosenPaymentMethod = paymentOptions[chosenPaymentIndex].value;
 
 // Global variables for credit card info:
-const creditCardField = document.getElementById("credit-card");
 const creditCardNumber = document.getElementById("cc-num");
 const creditCardZip = document.getElementById("zip");
+const creditCardCvv = document.getElementById("cvv");
 
 // Global functions:
 /**
@@ -176,11 +176,13 @@ function checkActivities(activities) {
 function validateCreditCard() {
     let isValidCCnum = /^(\d{13,16}$)/.test(creditCardNumber.value);
     let isValidCCzip = /^(\d{5}$)/.test(creditCardZip.value);
+    let isValidCCcvv = /^(\d{3}$)/.test(creditCardCvv.value);
     console.log(chosenPaymentMethod);
 
     if (chosenPaymentMethod === "credit-card") {
         console.log(isValidCCnum);
         console.log(isValidCCzip);
+        console.log(isValidCCcvv);
     }
 }
 
