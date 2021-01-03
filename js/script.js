@@ -183,15 +183,30 @@ function validateCreditCard() {
         console.log(isValidCCnum);
         console.log(isValidCCzip);
         console.log(isValidCCcvv);
+
+        if (isValidCCnum && isValidCCzip && isValidCCcvv) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
 // Form validation:
 console.log(checkActivities(activities));
 
-form.addEventListener("change", (e) => {
+form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
     let activityIsChecked = checkActivities(activities);
     let isValidCC = validateCreditCard();
+
+    if (!isValidName || !isValidEmail || !isValidCC || !activityIsChecked) {
+        e.preventDefault();
+        console.log("Form submission:");
+        console.log(isValidName);
+        console.log(isValidEmail);
+        console.log(isValidCC);
+        console.log(activityIsChecked);
+    }
 });
