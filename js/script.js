@@ -10,6 +10,14 @@ const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
 const selectDesign = document.getElementById("design");
 
+// Global variables for activities fieldset:
+const activitiesField = document.getElementById("activities");
+const activities = activitiesField.querySelectorAll(["[type='checkbox"]);
+const activitiesCostElem = document.getElementById("activities-cost");
+let activitiesCostValue = 0;
+
+console.log(activities);
+
 // Global variables for payment:
 const selectPayment = document.getElementById("payment");
 const paymentOptions = document.querySelectorAll("select#payment option");
@@ -19,11 +27,6 @@ let chosenPaymentMethod = paymentOptions[chosenPaymentIndex].value;
 
 console.log(paymentOptions);
 console.log(paymentMenus);
-
-// Global variables for activities fieldset:
-const activitiesField = document.getElementById("activities");
-const activitiesCostElem = document.getElementById("activities-cost");
-let activitiesCostValue = 0;
 
 // Global functions:
 /**
@@ -148,12 +151,29 @@ function validateEmail(email) {
     return emailRegEx.test(email);
 }
 
+/**
+ * @function checkActivities
+ * @description Checks if at least one of the activities was checked
+ */
+function checkActivities(activities) {
+    let isChecked = false;
+
+    for (let i = 0; i < activities.length; i++) {
+        if (activities[i].checked) {
+            isChecked = true;
+        } else {
+            isChecked = false;
+        }
+    }
+
+    return isChecked;
+}
+
 // Form validation:
-console.log(form);
-console.log(validateName(inputName.value));
-console.log(validateEmail(inputEmail.value));
+console.log(checkActivities(activities));
 
 form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
+    let activityIsChecked = checkActivities(activities);
 });
