@@ -25,8 +25,9 @@ const paymentMenus = buildPaymentMenus(paymentOptions);
 let chosenPaymentIndex = selectPayment.options.selectedIndex;
 let chosenPaymentMethod = paymentOptions[chosenPaymentIndex].value;
 
-console.log(paymentOptions);
-console.log(paymentMenus);
+// Global variables for credit card info:
+const creditCardField = document.getElementById("credit-card");
+const creditCardNumber = document.getElementById("cc-num");
 
 // Global functions:
 /**
@@ -127,7 +128,7 @@ selectPayment.addEventListener("change", (e) => {
     choosePaymentMethod(e.target.options.selectedIndex);
 })
 
-// Select the creadit card paymentoption by default:
+// Select the credit card paymentoption by default:
 choosePaymentMethod(1);
 
 // Validation functions:
@@ -136,7 +137,6 @@ choosePaymentMethod(1);
  */
 function validateName(name) {
     const nameRegEx = /\w+/;
-    console.log(name);
 
     return nameRegEx.test(name);
 }
@@ -146,7 +146,6 @@ function validateName(name) {
  */
 function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
-    console.log(email);
 
     return emailRegEx.test(email);
 }
@@ -169,11 +168,25 @@ function checkActivities(activities) {
     return isChecked;
 }
 
+/**
+ * @function validateCreditCard
+ * @description Checks if all the credit card input are valid
+ */
+function validateCreditCard() {
+    let isValidCCnum = /^(\d{13,16}$)/.test(creditCardNumber.value);
+    console.log(chosenPaymentMethod);
+
+    if (chosenPaymentMethod === "credit-card") {
+        console.log(isValidCCnum);
+    }
+}
+
 // Form validation:
 console.log(checkActivities(activities));
 
-form.addEventListener("submit", (e) => {
+form.addEventListener("change", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
     let activityIsChecked = checkActivities(activities);
+    let isValidCC = validateCreditCard();
 });
