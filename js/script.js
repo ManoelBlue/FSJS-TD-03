@@ -1,6 +1,8 @@
 console.log('test');
 
 //Global variables:
+const form = document.getElementsByTagName("form")[0];
+
 const inputName = document.getElementById("name");
 const inputOtherJob = document.getElementById("other-job-role");
 const selectJob = document.getElementById("title");
@@ -124,3 +126,9 @@ selectPayment.addEventListener("change", (e) => {
 // Select the creadit card paymentoption by default:
 choosePaymentMethod(1);
 
+// Form validation:
+console.log(form);
+
+form.addEventListener("submit", (e) => {
+
+});
