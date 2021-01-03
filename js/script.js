@@ -4,6 +4,7 @@ console.log('test');
 const form = document.getElementsByTagName("form")[0];
 
 const inputName = document.getElementById("name");
+const inputEmail = document.getElementById("email");
 const inputOtherJob = document.getElementById("other-job-role");
 const selectJob = document.getElementById("title");
 const selectColor = document.getElementById("color");
@@ -126,9 +127,33 @@ selectPayment.addEventListener("change", (e) => {
 // Select the creadit card paymentoption by default:
 choosePaymentMethod(1);
 
+// Validation functions:
+/**
+ * @function validateName
+ */
+function validateName(name) {
+    const nameRegEx = /\w+/;
+    console.log(name);
+
+    return nameRegEx.test(name);
+}
+
+/**
+ * @function validateEmail
+ */
+function validateEmail(email) {
+    const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
+    console.log(email);
+
+    return emailRegEx.test(email);
+}
+
 // Form validation:
 console.log(form);
+console.log(validateName(inputName.value));
+console.log(validateEmail(inputEmail.value));
 
 form.addEventListener("submit", (e) => {
-
+    let isValidName = validateName(inputName.value);
+    let isValidEmail = validateEmail(inputEmail.value);
 });
