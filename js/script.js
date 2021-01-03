@@ -30,6 +30,14 @@ const creditCardNumber = document.getElementById("cc-num");
 const creditCardZip = document.getElementById("zip");
 const creditCardCvv = document.getElementById("cvv");
 
+// Global variables for hints:
+const hintName = document.getElementById("name-hint");
+const hintEmail = document.getElementById("email-hint");
+const hintActivities = document.getElementById("activities-hint");
+const hintCCnum = document.getElementById("cc-hint");
+const hintCCzip = document.getElementById("zip-hint");
+const hintCCcvv = document.getElementById("cvv-hint");
+
 // Global functions:
 /**
  * @function buildPaymentMenus
