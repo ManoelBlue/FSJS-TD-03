@@ -30,14 +30,6 @@ const creditCardNumber = document.getElementById("cc-num");
 const creditCardZip = document.getElementById("zip");
 const creditCardCvv = document.getElementById("cvv");
 
-// Global variables for hints:
-const hintName = document.getElementById("name-hint");
-const hintEmail = document.getElementById("email-hint");
-const hintActivities = document.getElementById("activities-hint");
-const hintCCnum = document.getElementById("cc-hint");
-const hintCCzip = document.getElementById("zip-hint");
-const hintCCcvv = document.getElementById("cvv-hint");
-
 // Global functions:
 /**
  * @function buildPaymentMenus
@@ -140,6 +132,38 @@ selectPayment.addEventListener("change", (e) => {
 // Select the credit card paymentoption by default:
 choosePaymentMethod(1);
 
+// Helper functions:
+/**
+ * @function checkInput
+ * @description check input element validation and display hint
+ * @param {Element} - input element
+ * @param {Boolean} - indicates the input validity
+ */
+function checkInput(inputElem, isValid) {
+    let inputType = inputElem.getAttribute("type");
+    let parent;
+    let hint;
+    
+    if (inputType === "checkbox") {
+        parent = activitiesField;
+        hint = activitiesField.lastElementChild;
+    } else {
+        parent = inputElem.parentElement;
+        hint = parent.lastElementChild;
+    }
+
+    if (isValid) {
+        hint.style.display = "none";
+        parent.classList.remove("not-valid");
+        parent.classList.add("valid");
+    } else {
+        hint.style.display = "block";
+        parent.classList.add("not-valid");
+        parent.classList.remove("valid");
+    }
+
+}
+
 // Validation functions:
 /**
  * @function validateName
@@ -148,15 +172,7 @@ function validateName(name) {
     const nameRegEx = /\w+/;
     const isValid = nameRegEx.test(name);
 
-    if (isValid) {
-        hintName.style.display = "none";
-        inputName.parentNode.classList.remove("not-valid");
-        inputName.parentNode.classList.add("valid");
-    } else {
-        hintName.style.display = "block";
-        inputName.parentNode.classList.add("not-valid");
-        inputName.parentNode.classList.remove("valid");
-    }
+    checkInput(inputName, isValid);
 
     return isValid;
 }
@@ -168,15 +184,7 @@ function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
     const isValid = emailRegEx.test(email);
 
-    if (isValid) {
-        hintEmail.style.display = "none";
-        inputEmail.parentNode.classList.remove("not-valid");
-        inputEmail.parentNode.classList.add("valid");
-    } else {
-        hintEmail.style.display = "block";
-        inputEmail.parentNode.classList.add("not-valid");
-        inputEmail.parentNode.classList.remove("valid");
-    }
+    checkInput(inputEmail, isValid);
 
     return isValid;
 }
@@ -191,15 +199,11 @@ function checkActivities(activities) {
     for (let i = 0; i < activities.length; i++) {
         if (activities[i].checked) {
             isChecked = true;
-            hintActivities.style.display = "none";
-            activitiesField.classList.remove("not-valid");
-            activitiesField.classList.add("valid");
+            checkInput(activities[i], isChecked);
             break;
         } else {
             isChecked = false;
-            hintActivities.style.display = "block";
-            activitiesField.classList.add("not-valid");
-            activitiesField.classList.remove("valid");
+            checkInput(activities[i], isChecked);
         }
     }
 
@@ -219,18 +223,9 @@ function validateCreditCard() {
         let isValid = false;
 
         // Check each field and return hint if needed:
-        isValidCCnum ? hintCCnum.style.display = "none" : hintCCnum.style.display = "block";
-        isValidCCzip ? hintCCzip.style.display = "none" : hintCCzip.style.display = "block";
-        isValidCCcvv ? hintCCcvv.style.display = "none" : hintCCcvv.style.display = "block";
-        
-        // Add/remove not-valid class to labels:
-        isValidCCnum ? hintCCnum.parentNode.classList.remove("not-valid") : hintCCnum.parentNode.classList.add("not-valid");
-        isValidCCzip ? hintCCzip.parentNode.classList.remove("not-valid") : hintCCzip.parentNode.classList.add("not-valid");
-        isValidCCcvv ? hintCCcvv.parentNode.classList.remove("not-valid") : hintCCcvv.parentNode.classList.add("not-valid");
-        // Add/remove not-valid class to labels:
-        isValidCCnum ? hintCCnum.parentNode.classList.add("valid") : hintCCnum.parentNode.classList.remove("valid");
-        isValidCCzip ? hintCCzip.parentNode.classList.add("valid") : hintCCzip.parentNode.classList.remove("valid");
-        isValidCCcvv ? hintCCcvv.parentNode.classList.add("valid") : hintCCcvv.parentNode.classList.remove("valid");
+        checkInput(creditCardNumber, isValidCCnum);
+        checkInput(creditCardZip, isValidCCzip);
+        checkInput(creditCardCvv, isValidCCcvv);
 
         (isValidCCnum && isValidCCzip && isValidCCcvv) ? isValid = true : isValid = false;
 
