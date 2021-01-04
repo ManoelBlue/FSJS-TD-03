@@ -146,8 +146,10 @@ choosePaymentMethod(1);
  */
 function validateName(name) {
     const nameRegEx = /\w+/;
+    const isValid = nameRegEx.test(name);
 
-    return nameRegEx.test(name);
+    isValid ? hintName.style.display = "none" : hintName.style.display = "block";
+    return isValid;
 }
 
 /**
@@ -155,8 +157,10 @@ function validateName(name) {
  */
 function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
+    const isValid = emailRegEx.test(email);
 
-    return emailRegEx.test(email);
+    isValid ? hintEmail.style.display = "none" :hintEmail.style.display = "block";
+    return isValid;
 }
 
 /**
@@ -169,8 +173,11 @@ function checkActivities(activities) {
     for (let i = 0; i < activities.length; i++) {
         if (activities[i].checked) {
             isChecked = true;
+            hintActivities.style.display = "none";
+            break;
         } else {
             isChecked = false;
+            hintActivities.style.display = "block";
         }
     }
 
@@ -185,36 +192,34 @@ function validateCreditCard() {
     let isValidCCnum = /^(\d{13,16}$)/.test(creditCardNumber.value);
     let isValidCCzip = /^(\d{5}$)/.test(creditCardZip.value);
     let isValidCCcvv = /^(\d{3}$)/.test(creditCardCvv.value);
-    console.log(chosenPaymentMethod);
 
     if (chosenPaymentMethod === "credit-card") {
-        console.log(isValidCCnum);
-        console.log(isValidCCzip);
-        console.log(isValidCCcvv);
+        let isValid = false;
 
-        if (isValidCCnum && isValidCCzip && isValidCCcvv) {
-            return true;
-        } else {
-            return false;
-        }
+        // Check each field and return hint if needed:
+        isValidCCnum ? hintCCnum.style.display = "none" : hintCCnum.style.display = "block";
+        isValidCCzip ? hintCCzip.style.display = "none" : hintCCzip.style.display = "block";
+        isValidCCcvv ? hintCCcvv.style.display = "none" : hintCCcvv.style.display = "block";
+
+        (isValidCCnum && isValidCCzip && isValidCCcvv) ? isValid = true : isValid = false;
+
+        return isValid;
     }
 }
 
 // Form validation:
-console.log(checkActivities(activities));
-
-form.addEventListener("submit", (e) => {
+form.addEventListener("change", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
     let activityIsChecked = checkActivities(activities);
     let isValidCC = validateCreditCard();
 
+    validateName(inputName.value);
+    validateEmail(inputEmail.value);
+    checkActivities(activities);
+    validateCreditCard();
+
     if (!isValidName || !isValidEmail || !isValidCC || !activityIsChecked) {
         e.preventDefault();
-        console.log("Form submission:");
-        console.log(isValidName);
-        console.log(isValidEmail);
-        console.log(isValidCC);
-        console.log(activityIsChecked);
     }
 });
