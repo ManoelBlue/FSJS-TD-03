@@ -148,7 +148,14 @@ function validateName(name) {
     const nameRegEx = /\w+/;
     const isValid = nameRegEx.test(name);
 
-    isValid ? hintName.style.display = "none" : hintName.style.display = "block";
+    if (isValid) {
+        hintName.style.display = "none";
+        inputName.parentNode.classList.remove("not-valid");
+    } else {
+        hintName.style.display = "block";
+        inputName.parentNode.classList.add("not-valid");
+    }
+
     return isValid;
 }
 
@@ -159,7 +166,14 @@ function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
     const isValid = emailRegEx.test(email);
 
-    isValid ? hintEmail.style.display = "none" :hintEmail.style.display = "block";
+    if (isValid) {
+        hintEmail.style.display = "none";
+        inputEmail.parentNode.classList.remove("not-valid");
+    } else {
+        hintEmail.style.display = "block";
+        inputEmail.parentNode.classList.add("not-valid");
+    }
+
     return isValid;
 }
 
@@ -174,10 +188,12 @@ function checkActivities(activities) {
         if (activities[i].checked) {
             isChecked = true;
             hintActivities.style.display = "none";
+            activitiesField.classList.remove("not-valid");
             break;
         } else {
             isChecked = false;
             hintActivities.style.display = "block";
+            activitiesField.classList.add("not-valid");
         }
     }
 
@@ -200,6 +216,11 @@ function validateCreditCard() {
         isValidCCnum ? hintCCnum.style.display = "none" : hintCCnum.style.display = "block";
         isValidCCzip ? hintCCzip.style.display = "none" : hintCCzip.style.display = "block";
         isValidCCcvv ? hintCCcvv.style.display = "none" : hintCCcvv.style.display = "block";
+        
+        // Add/remove not-valid class to labels:
+        isValidCCnum ? hintCCnum.parentNode.classList.remove("not-valid") : hintCCnum.parentNode.classList.add("not-valid");
+        isValidCCzip ? hintCCzip.parentNode.classList.remove("not-valid") : hintCCzip.parentNode.classList.add("not-valid");
+        isValidCCcvv ? hintCCcvv.parentNode.classList.remove("not-valid") : hintCCcvv.parentNode.classList.add("not-valid");
 
         (isValidCCnum && isValidCCzip && isValidCCcvv) ? isValid = true : isValid = false;
 
