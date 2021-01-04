@@ -16,8 +16,6 @@ const activities = activitiesField.querySelectorAll(["[type='checkbox"]);
 const activitiesCostElem = document.getElementById("activities-cost");
 let activitiesCostValue = 0;
 
-console.log(activities);
-
 // Global variables for payment:
 const selectPayment = document.getElementById("payment");
 const paymentOptions = document.querySelectorAll("select#payment option");
@@ -30,7 +28,7 @@ const creditCardNumber = document.getElementById("cc-num");
 const creditCardZip = document.getElementById("zip");
 const creditCardCvv = document.getElementById("cvv");
 
-// Global functions:
+// Helper functions:
 /**
  * @function buildPaymentMenus
  * @description Creates a nodelist with all menu divs
@@ -46,95 +44,6 @@ function buildPaymentMenus(paymentOptions) {
     return menus;
 };
 
-// Highlight name input when page first loads:
-inputName.focus();
-
-//Hide the other-job-role input by default:
-inputOtherJob.style.display = "none";
-
-//Listen to changes on select Job and show/hide input other job:
-selectJob.addEventListener("change", (e) => {
-    let selectedIndex = e.target.options.selectedIndex;
-    let selectedOption = e.target[selectedIndex].value;
-
-    console.log(selectedIndex);
-    console.log(selectedOption);
-
-    if(selectedOption === "other") {
-        inputOtherJob.style.display = "block"
-    } else {
-        inputOtherJob.style.display = "none";
-    }
-})
-
-// Disable select color:
-selectColor.disabled = true;
-console.dir(selectColor);
-
-// Listen to change in selectDesgin:
-selectDesign.addEventListener("change", (e) => {
-    let selectedIndex = e.target.options.selectedIndex;
-    let selectedOption = e.target[selectedIndex].value;
-    let options = document.querySelectorAll("option[data-theme]");
-
-    selectColor.disabled = false;
-    for ( let i = 0; i < options.length; i++) {
-        let dataTheme = options[i].dataset.theme;
-        console.log(dataTheme);
-
-        if (selectedOption !== dataTheme) {
-            options[i].hidden = true;
-        } else {
-            options[i].hidden = false;
-        }
-    }
-})
-
-// Listen for change in the Activities fieldset:
-activitiesField.addEventListener("change", (e) => {
-    let cost = parseInt(e.target.dataset.cost);
-
-    if (e.target.checked) {
-        activitiesCostValue += cost;
-    } else {
-        activitiesCostValue -= cost;
-        if (activitiesCostValue <= 0) {
-            activitiesCostValue = 0;
-        }
-    }
-
-    disableConflictingActivities(e.target);
-
-    activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
-})
-
-/**
- * @function choosePaymentMethod
- * @param {number} - sets the chosen payment method index
- * @description chooses the payment method
- */
-function choosePaymentMethod(paymentIndex) {
-    chosenPaymentIndex = paymentIndex;
-    chosenPaymentMethod = paymentOptions[paymentIndex].value;
-
-    for (let i = 0; i < paymentMenus.length; i++) {
-        if (paymentMenus[i]) {
-            paymentMenus[i].style.display = "none";
-            paymentMenus[chosenPaymentIndex].style.display = "block";
-        }
-    }
-    paymentOptions[chosenPaymentIndex].selected = true;
-}
-
-// Display only payment chosen payment section:
-selectPayment.addEventListener("change", (e) => {
-    choosePaymentMethod(e.target.options.selectedIndex);
-})
-
-// Select the credit card paymentoption by default:
-choosePaymentMethod(1);
-
-// Helper functions:
 /**
  * @function checkInput
  * @description check input element validation and display hint
@@ -188,6 +97,94 @@ function disableConflictingActivities(activity) {
         }
     }
 }
+
+/**
+ * @function choosePaymentMethod
+ * @param {number} - sets the chosen payment method index
+ * @description chooses the payment method
+ */
+function choosePaymentMethod(paymentIndex) {
+    chosenPaymentIndex = paymentIndex;
+    chosenPaymentMethod = paymentOptions[paymentIndex].value;
+
+    for (let i = 0; i < paymentMenus.length; i++) {
+        if (paymentMenus[i]) {
+            paymentMenus[i].style.display = "none";
+            paymentMenus[chosenPaymentIndex].style.display = "block";
+        }
+    }
+    paymentOptions[chosenPaymentIndex].selected = true;
+}
+// End of helper functions and variables declarations
+
+/**
+ * Page functionalities:
+ */
+
+// Highlight name input when page first loads:
+inputName.focus();
+
+//Hide the other-job-role input by default:
+inputOtherJob.style.display = "none";
+
+//Listen to changes on select Job and show/hide input other job:
+selectJob.addEventListener("change", (e) => {
+    let selectedIndex = e.target.options.selectedIndex;
+    let selectedOption = e.target[selectedIndex].value;
+
+    if(selectedOption === "other") {
+        inputOtherJob.style.display = "block"
+    } else {
+        inputOtherJob.style.display = "none";
+    }
+})
+
+// Disable select color:
+selectColor.disabled = true;
+
+// Listen to change in selectDesgin:
+selectDesign.addEventListener("change", (e) => {
+    let selectedIndex = e.target.options.selectedIndex;
+    let selectedOption = e.target[selectedIndex].value;
+    let options = document.querySelectorAll("option[data-theme]");
+
+    selectColor.disabled = false;
+    for ( let i = 0; i < options.length; i++) {
+        let dataTheme = options[i].dataset.theme;
+
+        if (selectedOption !== dataTheme) {
+            options[i].hidden = true;
+        } else {
+            options[i].hidden = false;
+        }
+    }
+})
+
+// Listen for change in the Activities fieldset:
+activitiesField.addEventListener("change", (e) => {
+    let cost = parseInt(e.target.dataset.cost);
+
+    if (e.target.checked) {
+        activitiesCostValue += cost;
+    } else {
+        activitiesCostValue -= cost;
+        if (activitiesCostValue <= 0) {
+            activitiesCostValue = 0;
+        }
+    }
+
+    disableConflictingActivities(e.target);
+
+    activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
+})
+
+// Display only payment chosen payment section:
+selectPayment.addEventListener("change", (e) => {
+    choosePaymentMethod(e.target.options.selectedIndex);
+})
+
+// Select the credit card paymentoption by default:
+choosePaymentMethod(1);
 
 // Validation functions:
 /**
@@ -266,7 +263,7 @@ function validateCreditCard() {
 }
 
 // Form validation:
-form.addEventListener("change", (e) => {
+form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
     let activityIsChecked = checkActivities(activities);
