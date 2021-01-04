@@ -103,6 +103,8 @@ activitiesField.addEventListener("change", (e) => {
         }
     }
 
+    disableConflictingActivities(e.target);
+
     activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
 })
 
@@ -161,7 +163,30 @@ function checkInput(inputElem, isValid) {
         parent.classList.add("not-valid");
         parent.classList.remove("valid");
     }
+}
 
+/**
+ * @function disableConflictingActivities
+ * @param {Elem} activity - input element type checkbox containing the chosen activity
+ * @description disables conflicting activities
+ */
+function disableConflictingActivities(activity) {
+    let parent = activity.parentElement;
+    let date = parent.querySelector(":nth-child(3)").textContent;
+
+    parent.classList.remove("disabled");
+
+    for (let i = 0; i < activities.length; i++) {
+        let parent2 = activities[i].parentElement;
+        let date2 = parent2.querySelector(":nth-child(3)").textContent;
+
+        if (date === date2 && activities[i] !== activity && activity.checked === true) {
+            parent2.classList.add("disabled");
+            activities[i].checked = false;
+        } else if (date === date2 && activities[i] !== activity && activity.checked === false) {
+            parent2.classList.remove("disabled");
+        }
+    }
 }
 
 // Validation functions:
