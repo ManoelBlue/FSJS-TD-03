@@ -284,3 +284,13 @@ for (let i = 0; i < activities.length; i++) {
         activities[i].parentNode.classList.remove("focus");
     });
 }
+
+// Real-time error messages
+// Input listeners:
+inputName.addEventListener("keyup", (e) => {
+    validateName(e.target.value);
+});
+
+inputEmail.addEventListener("keyup", (e) => {
+    validateEmail(e.target.value);
+});
