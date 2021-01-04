@@ -223,3 +223,13 @@ form.addEventListener("change", (e) => {
         e.preventDefault();
     }
 });
+
+// Add proper focus on activities select:
+for (let i = 0; i < activities.length; i++) {
+    activities[i].addEventListener("focus", (e) => {
+        activities[i].parentNode.classList.add("focus");
+    });
+    activities[i].addEventListener("blur", (e) => {
+        activities[i].parentNode.classList.remove("focus");
+    });
+}
