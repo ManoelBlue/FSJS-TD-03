@@ -208,6 +208,13 @@ function validateName(name) {
 function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
     const isValid = emailRegEx.test(email);
+    const emailHint = document.getElementById("email-hint");
+
+    if (inputEmail.value === "") {
+        emailHint.textContent = "Email address cannot be blank";
+    } else if (inputEmail.value !== "" && !isValid) {
+        emailHint.textContent = "Email address must be formatted correctly";
+    }
 
     checkInput(inputEmail, isValid);
 
