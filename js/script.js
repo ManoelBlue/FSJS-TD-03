@@ -1,5 +1,3 @@
-console.log('test');
-
 //Global variables:
 const form = document.getElementsByTagName("form")[0];
 
@@ -268,7 +266,6 @@ function validateCreditCard() {
     }
 }
 
-console.log(chosenPaymentMethod);
 // Form validation:
 form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
