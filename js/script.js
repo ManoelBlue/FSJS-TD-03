@@ -82,20 +82,25 @@ function checkInput(inputElem, isValid) {
 function disableConflictingActivities(activity) {
     let parent = activity.parentElement;
     let date = parent.querySelector(":nth-child(3)").textContent;
+    let isDisabled = parent.classList.contains("disabled");
+    let isChecked = activity.checked;
 
-    parent.classList.remove("disabled");
-
-    for (let i = 0; i < activities.length; i++) {
-        let parent2 = activities[i].parentElement;
-        let date2 = parent2.querySelector(":nth-child(3)").textContent;
-
-        if (date === date2 && activities[i] !== activity && activity.checked === true) {
-            parent2.classList.add("disabled");
-            activities[i].checked = false;
-        } else if (date === date2 && activities[i] !== activity && activity.checked === false) {
-            parent2.classList.remove("disabled");
+    if(!isDisabled) {
+        for (let i = 0; i < activities.length; i++) {
+            let activity2 = activities[i];
+            let parent2 = activity2.parentElement;
+            let date2 = parent2.querySelector(":nth-child(3)").textContent;
+    
+            if (date === date2 && activity !== activity2 && isChecked) {
+                parent2.classList.add("disabled");
+            } else if (date === date2 && activity !== activity2 && !isChecked) {
+                parent2.classList.remove("disabled");
+            }
         }
+    } else {
+        activity.checked = false;
     }
+
 }
 
 /**
