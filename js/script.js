@@ -158,6 +158,7 @@ selectDesign.addEventListener("change", (e) => {
             options[i].hidden = false;
         }
     }
+    selectColor.options.selectedIndex = 0;
 })
 
 // Listen for change in the Activities fieldset:
