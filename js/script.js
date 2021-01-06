@@ -164,17 +164,15 @@ selectDesign.addEventListener("change", (e) => {
     selectColor.options.selectedIndex = 0;
 })
 
-// Listen for change in the Activities fieldset:
+// Listen for change in the Activities fieldset and set the price:
 activitiesField.addEventListener("change", (e) => {
     let cost = parseInt(e.target.dataset.cost);
+    let isDisabled = e.target.parentElement.classList.contains("disabled");
 
-    if (e.target.checked) {
+    if (e.target.checked && !isDisabled) {
         activitiesCostValue += cost;
-    } else {
+    } else if (!e.target.checked && !isDisabled) {
         activitiesCostValue -= cost;
-        if (activitiesCostValue <= 0) {
-            activitiesCostValue = 0;
-        }
     }
 
     disableConflictingActivities(e.target);
@@ -288,10 +286,10 @@ form.addEventListener("submit", (e) => {
 // Add proper focus on activities select:
 for (let i = 0; i < activities.length; i++) {
     activities[i].addEventListener("focus", (e) => {
-        activities[i].parentNode.classList.add("focus");
+        activities[i].parentElement.classList.add("focus");
     });
     activities[i].addEventListener("blur", (e) => {
-        activities[i].parentNode.classList.remove("focus");
+        activities[i].parentElement.classList.remove("focus");
     });
 }
 
