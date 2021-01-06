@@ -268,20 +268,23 @@ function validateCreditCard() {
     }
 }
 
+console.log(chosenPaymentMethod);
 // Form validation:
 form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
     let activityIsChecked = checkActivities(activities);
-    let isValidCC = validateCreditCard();
 
-    validateName(inputName.value);
-    validateEmail(inputEmail.value);
-    checkActivities(activities);
-    validateCreditCard();
-
-    if (!isValidName || !isValidEmail || !isValidCC || !activityIsChecked) {
+    if (!isValidName || !isValidEmail || !activityIsChecked) {
         e.preventDefault();
+    }
+
+    if (chosenPaymentMethod === "credit-card") {
+        let isValidCC = validateCreditCard();
+
+        if (!isValidCC) {
+            e.preventDefault();
+        }
     }
 });
 
