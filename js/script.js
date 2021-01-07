@@ -29,8 +29,8 @@ const creditCardCvv = document.getElementById("cvv");
 // Helper functions:
 /**
  * @function buildPaymentMenus
- * @description Creates a nodelist with all menu divs
- * @param {NodeList} - nodelist with possible options of payment
+ * @description Creates a nodelist with all menu div elements
+ * @param {NodeList} paymentOptions - nodelist with possible options of payment
  */
 function buildPaymentMenus(paymentOptions) {
     let menus = [];
@@ -45,8 +45,8 @@ function buildPaymentMenus(paymentOptions) {
 /**
  * @function checkInput
  * @description check input element validation and display hint
- * @param {Element} - input element
- * @param {Boolean} - indicates the input validity
+ * @param {Element} inputElem - input element
+ * @param {Boolean} isValid - indicates the input validity
  */
 function checkInput(inputElem, isValid) {
     let inputType = inputElem.getAttribute("type");
@@ -74,8 +74,8 @@ function checkInput(inputElem, isValid) {
 
 /**
  * @function disableConflictingActivities
- * @param {Elem} activity - input element type checkbox containing the chosen activity
  * @description disables conflicting activities
+ * @param {Elem} activity - input element type checkbox containing the chosen activity
  */
 function disableConflictingActivities(activity) {
     let parent = activity.parentElement;
@@ -98,13 +98,12 @@ function disableConflictingActivities(activity) {
     } else {
         activity.checked = false;
     }
-
 }
 
 /**
  * @function choosePaymentMethod
- * @param {number} - sets the chosen payment method index
  * @description chooses the payment method
+ * @param {number} paymentIndex - number greater or equal to zero to set the chosen payment method
  */
 function choosePaymentMethod(paymentIndex) {
     chosenPaymentIndex = paymentIndex;
@@ -145,7 +144,7 @@ selectJob.addEventListener("change", (e) => {
 // Disable select color:
 selectColor.disabled = true;
 
-// Listen to change in selectDesgin:
+// Listen to change in selectDesgin and display available colors:
 selectDesign.addEventListener("change", (e) => {
     let selectedIndex = e.target.options.selectedIndex;
     let selectedOption = e.target[selectedIndex].value;
@@ -164,7 +163,8 @@ selectDesign.addEventListener("change", (e) => {
     selectColor.options.selectedIndex = 0;
 })
 
-// Listen for change in the Activities fieldset and set the price:
+// Listen to change in the Activities fieldset
+// disable conflicting activities and set the price:
 activitiesField.addEventListener("change", (e) => {
     let cost = parseInt(e.target.dataset.cost);
     let isDisabled = e.target.parentElement.classList.contains("disabled");
@@ -180,17 +180,19 @@ activitiesField.addEventListener("change", (e) => {
     activitiesCostElem.textContent = `Total: $${activitiesCostValue}`
 })
 
-// Display only payment chosen payment section:
+// Display only the chosen payment chosen menu section:
 selectPayment.addEventListener("change", (e) => {
     choosePaymentMethod(e.target.options.selectedIndex);
 })
 
-// Select the credit card paymentoption by default:
+// Select the credit card payment option by default:
 choosePaymentMethod(1);
 
 // Validation functions:
 /**
  * @function validateName
+ * @description validates name input
+ * @param {Element} inputName - input element for name value
  */
 function validateName(name) {
     const nameRegEx = /\w+/;
@@ -203,6 +205,8 @@ function validateName(name) {
 
 /**
  * @function validateEmail
+ * @description validates email input
+ * @param {Element} inputEmail - input element for email value
  */
 function validateEmail(email) {
     const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
@@ -222,7 +226,8 @@ function validateEmail(email) {
 
 /**
  * @function checkActivities
- * @description Checks if at least one of the activities was checked
+ * @description Check if at least one of the activities was checked
+ * @param {NodeList} activities - NodeList with all available activities
  */
 function checkActivities(activities) {
     let isChecked = false;
@@ -243,7 +248,7 @@ function checkActivities(activities) {
 
 /**
  * @function validateCreditCard
- * @description Checks if all the credit card input are valid
+ * @description Check if all the credit card inputs are valid
  */
 function validateCreditCard() {
     let isValidCCnum = /^(\d{13,16}$)/.test(creditCardNumber.value);
@@ -265,6 +270,7 @@ function validateCreditCard() {
 }
 
 // Form validation:
+// Check form fields validity on form submit event
 form.addEventListener("submit", (e) => {
     let isValidName = validateName(inputName.value);
     let isValidEmail = validateEmail(inputEmail.value);
@@ -284,6 +290,7 @@ form.addEventListener("submit", (e) => {
 });
 
 // Add proper focus on activities select:
+// for tabbing navigation
 for (let i = 0; i < activities.length; i++) {
     activities[i].addEventListener("focus", (e) => {
         activities[i].parentElement.classList.add("focus");
@@ -293,7 +300,7 @@ for (let i = 0; i < activities.length; i++) {
     });
 }
 
-// Real-time error messages
+// Real-time error messages on name and email inputs
 // Input listeners:
 inputName.addEventListener("keyup", (e) => {
     validateName(e.target.value);
