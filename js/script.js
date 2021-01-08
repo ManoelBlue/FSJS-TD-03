@@ -195,7 +195,7 @@ choosePaymentMethod(1);
  * @param {Element} inputName - input element for name value
  */
 function validateName(name) {
-    const nameRegEx = /\w+/;
+    const nameRegEx = /(\w+)/;
     const isValid = nameRegEx.test(name);
 
     checkInput(inputName, isValid);
@@ -209,7 +209,7 @@ function validateName(name) {
  * @param {Element} inputEmail - input element for email value
  */
 function validateEmail(email) {
-    const emailRegEx = /(\w+)(@)(\w+)(\.com)/i;
+    const emailRegEx = /^(\w+)(@)(\w+)(\.com)$/i;
     const isValid = emailRegEx.test(email);
     const emailHint = document.getElementById("email-hint");
 
