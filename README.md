@@ -1,6 +1,6 @@
 # Full Stack JavaScript Techdegree Project 03
 
-## Interative Form
+## Interactive Form
 Uses JavaScript to add form interactivity:
 - validate each of the fields;
 - check for conflicting activities;
